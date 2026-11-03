@@ -1,0 +1,5 @@
+{
+  "name": "tutor",
+  "description": "Método de aprendizado com IA. Por enquanto, pede aprovação antes de cada edição num plano.",
+  "version": "0.1.0"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "ai-tutor",
+  "description": "Ferramentas do método de aprendizado com IA",
+  "owner": {
+    "name": "Matheus Kubrusly"
+  },
+  "plugins": [
+    {
+      "name": "tutor",
+      "source": "./plugins/tutor",
+      "description": "Método de aprendizado com IA"
+    }
+  ]
+}
