@@ -25,8 +25,11 @@ O Matheus usa cada tarefa para aprender: modelagem, código, terminal e as ferra
 > **Efeito:** só lê. **Saída esperada:** 5 linhas, uma por commit.
 
 - Explique também os encadeamentos: `&&` (roda o próximo só se o anterior deu certo), `|` (passa a saída de um comando para o próximo), `>` e `>>` (gravam a saída num arquivo), `2>&1` (junta as mensagens de erro à saída normal).
+- **Explique também o que está dentro das aspas e dos símbolos:** filtros do `jq`, programas do `awk`, padrões de busca (expressões regulares do `grep` e do `sed`), substituições como `$(...)`, variáveis como `$f` e laços como `for ... do ... done`. Cada pedaço com significado ganha uma linha no quadro; um filtro longo é quebrado em partes, na ordem em que roda.
+- Um filtro, um padrão ou uma combinação de opções novos contam como novos, mesmo que o programa já tenha aparecido na sessão.
+- **Prefira passos simples a encadeamentos longos:** quando um comando juntar mais de três peças, divida em comandos menores, para o Matheus conseguir acompanhar cada um.
 - **Efeito** é sempre um destes: "só lê", "altera arquivos", "altera o repositório git" ou "altera algo fora do computador (GitHub, internet)". Quando altera, diga o quê, antes de rodar.
-- Comando ou opção já explicados na sessão: só uma linha, por exemplo "`git status` (já visto: mostra os arquivos alterados)".
+- Comando ou opção já explicados na sessão: uma explicação curta do que está sendo feito, focada no que pode não estar claro (uma opção menos usada, por exemplo), como em "`git status` (já visto: mostra os arquivos alterados)". Todo comando rodado tem alguma explicação, mesmo os mais rotineiros.
 - Depois de rodar, se a saída não for óbvia, explique em uma ou duas linhas o que ela mostrou.
 - O `description` de cada comando continua curto e em português, porque ele aparece no registro do terminal (`~/.claude/logs/terminal.log`).
 
