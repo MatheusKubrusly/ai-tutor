@@ -63,7 +63,7 @@ Primeira rodada da revisão (passo 4 da issue #2).
 
 **Revisar um plano que mora num repositório (decidido em 16/11):** no modo de planejamento, o Claude só pode editar o plano da sessão, que o Claude Code cria com um nome gerado na hora em `~/.claude/plans/`. Por isso, cada rodada trabalha numa cópia:
 
-1. **Abrir:** o Matheus entra no modo de planejamento; o Claude grava o conteúdo do plano no plano da sessão (com o pedido de aprovação) e confere com `diff` se as duas cópias ficaram idênticas.
+1. **Abrir:** o Matheus entra no modo de planejamento; o Claude monta o comando `cp` com o caminho do plano da sessão; o Matheus o roda no terminal integrado do VS Code, que fica fora da trava do modo (no painel do Claude, o `!` não roda comandos; decidido em 16/11); o Claude confere com `diff` se as duas cópias ficaram idênticas.
 2. **Revisar:** como antes, com edições pequenas na cópia, cada uma com a comparação; os comentários do Matheus vêm na recusa do plano.
 3. **Fechar:** depois do "aprovado", o Claude sai do modo, confere pelo git se o plano do repositório mudou desde a cópia (se mudou, para e pergunta) e copia a versão aprovada por cima dele, de uma vez, com o `cp` (que pede aprovação e não depende de o Claude transcrever o texto). O `git diff` mostra todas as mudanças da rodada, e o Matheus confere antes do commit. Essa cópia inteira é a única exceção às edições pequenas, porque cada edição já foi aprovada na cópia.
 
