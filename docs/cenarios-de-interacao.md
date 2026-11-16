@@ -181,6 +181,26 @@ O Matheus pediu para explorar isso com calma, mais tarde (16/11). Ideia registra
 
 Fora da árvore, valem em todos os cenários: a linha de estado com o modo, o sinal de desinteresse (atalhos repetidos), o aviso de chat longo depois de uma pausa e as perguntas em vez de suposições.
 
+## Textos fixos (para revisar com calma)
+
+Linhas de estado, legendas e avisos que aparecem nas ferramentas do método. O Matheus quer revisar o formato e o texto de cada um, sem pressa (16/11):
+
+| Elemento | Onde aparece | Exemplo |
+|---|---|---|
+| Linha de estado do modo | Regras (item 1.2 do plano) | "Modo: como fazer · passo 2 de 4" |
+| Linha de estado do perfil | Perfil que dura (esta árvore) | "Perfil: pressa · só saber" |
+| Linha de estado do texto | Skill `escrever-texto` (esta árvore) | "Texto: dissertativo · longo · com ajuda" |
+| Quadro dos comandos | Estilo Aprendiz | Tabela "Parte / O que faz", com "Efeito" e "Saída esperada" |
+| Marca de comando já visto | Estilo Aprendiz | "`git status` (já visto: mostra os arquivos alterados)" |
+| Bloco Insight | Estilo Aprendiz | "★ Insight" com dois ou três pontos sobre o porquê de uma escolha |
+| Glossário antes de um arquivo de código | Estilo Aprendiz | "Glossário de `registrar-comandos.mjs`" |
+| Bloco "Aprender fazendo" | Estilo Aprendiz (suspenso na implementação acelerada) | "Contexto / Sua tarefa / O que pesar" |
+| Pedido de aprovação de edição | Gancho do plugin | "Edição num plano ou nas regras do método: aprove ou rejeite antes de gravar." |
+| Aviso de bloqueio de edição por script | Gancho do plugin | "Bloqueado: (motivo). Arquivos do repositório só são alterados com as ferramentas Edit e Write..." |
+| Descrição de cada comando | Registro do terminal (`~/.claude/logs/terminal.log`) | "Mostra a situação do repositório" |
+| Partes fixas do fim de uma tarefa | Núcleo provisório | "O que foi feito" / "O que precisa da validação do Matheus" |
+| Avisos previstos no plano | Regras e plugin de estudo | Sinal de desinteresse; "Amanhã é o último dia para manter a sequência (30 minutos bastam)"; aviso de chat longo depois de uma pausa; resumo a cada mensagem |
+
 ## O que falta decidir
 
 1. **Comandos de terminal:** quais são, além da pressa, os momentos em que o Claude pode ter mais liberdade.
@@ -190,6 +210,7 @@ Fora da árvore, valem em todos os cenários: a linha de estado com o modo, o si
 5. **Sinais:** a lista exata de palavras-chave e os nomes dos comandos (nas tarefas das regras definitivas, #3, e do plugin de estudo, #7).
 6. **Dúvida pontual:** confirmar que o perfil de resposta e o modo pergunta rápida a cobrem, sem skill própria.
 7. **Comportamento padrão por perfil:** validar a tabela skill por skill, na tarefa de cada skill, e preencher o que está "a definir".
+8. **Textos fixos:** revisar com calma o formato e o texto dos elementos da seção *Textos fixos*. Não é urgente; o estilo definitivo (#7) é o lugar natural para fixá-los.
 
 ## Já decidido nesta árvore (16/11)
 
