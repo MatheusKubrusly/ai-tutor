@@ -1,6 +1,19 @@
 # Plano: método de aprendizado com IA (tutor)
 
-**Em revisão.** Versão 15, de 16/11/2026. Desde essa data, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+**Em revisão.** Versão 16, de 16/11/2026. Desde essa data, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+
+## O que mudou na versão 16 (16/11)
+
+Primeira rodada da revisão (passo 4 da issue #2).
+
+| Seção | Mudança |
+|---|---|
+| *Implementação acelerada* (nova) | Implementar de verdade, sem degraus provisórios; modo revisor (o Claude produz, o Matheus revisa) até o método estar implementado; sessão principal e tarefas com issue e sessão própria; brechas em issues; sete tarefas |
+| Etapa prévia | Como revisar um plano que mora num repositório: uma cópia de trabalho no plano da sessão |
+| Parte A | Objetivo no computador; regras redigidas pelo Claude e revisadas pelo Matheus (1.2); os outros ambientes esperam (1.3); caderno de estudos mínimo no lugar da caixa de entrada no Notion (1.4); 1.5 e 1.6 seguem a fase nova |
+| *Quem escreve o quê* | A exceção do modo revisor |
+| *Pontos em aberto* | Novo: PA-7 (terminal ou VS Code); na PA-5, a dúvida entre o repositório e o Notion como centro do conhecimento |
+| *Pendências*; *Roteiro*; registros | O teste do plugin pela conta espera; as configurações do VS Code esperam a PA-7; incrementos 1 e 2 ajustados; decisões, rastreabilidade, conferência e histórico |
 
 ## O que mudou na versão 15 (16/11)
 
@@ -47,6 +60,12 @@
 
 - edições pequenas, nunca o arquivo inteiro;
 - ao fim de cada rodada, uma tabela liga cada comentário à edição feita e ao resultado.
+
+**Revisar um plano que mora num repositório (decidido em 16/11):** no modo de planejamento, o Claude só pode editar o plano da sessão, que o Claude Code cria com um nome gerado na hora em `~/.claude/plans/`. Por isso, cada rodada trabalha numa cópia:
+
+1. **Abrir:** o Matheus entra no modo de planejamento; o Claude grava o conteúdo do plano no plano da sessão (com o pedido de aprovação) e confere com `diff` se as duas cópias ficaram idênticas.
+2. **Revisar:** como antes, com edições pequenas na cópia, cada uma com a comparação; os comentários do Matheus vêm na recusa do plano.
+3. **Fechar:** depois do "aprovado", o Claude sai do modo, confere pelo git se o plano do repositório mudou desde a cópia (se mudou, para e pergunta) e copia a versão aprovada por cima dele, de uma vez, com o `cp` (que pede aprovação e não depende de o Claude transcrever o texto). O `git diff` mostra todas as mudanças da rodada, e o Matheus confere antes do commit. Essa cópia inteira é a única exceção às edições pequenas, porque cada edição já foi aprovada na cópia.
 
 **Onde o fluxo vale:**
 
@@ -115,14 +134,43 @@ O hábito que ele quer perder: copiar e colar o que a IA gera, por preguiça, se
 Decisões que moldam o plano:
 
 - **Tudo, sem exceção** (20/10): o método vale para estudos, documentos, código, comandos e rotinas.
-- **Implementar e refinar aos poucos** (29/10): o plano dá a noção do todo, mas cada incremento é planejado em detalhe na hora de começar, e o método já é usado desde o primeiro.
+- **Implementar e refinar aos poucos** (29/10): o plano dá a noção do todo, mas cada incremento é planejado em detalhe na hora de começar, e o método já é usado desde o primeiro (na *Implementação acelerada*, de 16/11, o uso espera a implementação de verdade).
 - **Foco 100% no fluxo geral** (28/10): o SGMF fica em pausa e guardado no próprio repositório (etapa 0.2, feita em 16/11: `planos/fluxo-de-trabalho.md`).
 - **Tudo pode ser público** (28/10).
 - **O conhecimento é para a vida toda** (28/10).
 
+# Implementação acelerada (decidida em 16/11)
+
+**Por quê:** o Matheus quer acelerar ao máximo a implementação de verdade do método. Em vez de degraus provisórios (como a caixa de entrada no Notion, que depois migraria para o caderno), cada tarefa constrói o que será usado no dia a dia, mesmo que o método fique mais tempo sem funcionar. Assim, "quanto antes o método começar, melhor" passa a valer para o método de verdade, e o uso desde o primeiro incremento (29/10) espera o fim desta fase.
+
+**Modo revisor:** nesta fase, o Claude produz, e o Matheus revisa e aprova. O Claude escreve os textos de rotina (issues, comentários, mensagens de commit, edições do plano), as regras definitivas, as skills, o estilo e todo o código, sem deixar trechos para o Matheus completar; monta e roda os comandos, com o quadro explicativo. O que publica algo fora do computador (push, criar issue, renomear repositório) espera o "pode" do Matheus. O modo vale até o Matheus declarar o método implementado e fica registrado no núcleo provisório, para toda sessão segui-lo.
+
+**Sessões:**
+
+- **sessão principal** (a sessão "ai-tutor · revisão do plano"): alinha os pontos em aberto e o restante da revisão, transforma em tarefa o que ficar pronto para implementar e confere a coerência entre as tarefas;
+- **sessões de tarefa:** cada tarefa tem uma issue, num Project do GitHub, e uma sessão com nome; no máximo 2 ou 3 ficam abertas ao mesmo tempo, e o Matheus escolhe quais abrir depois de as issues existirem;
+- **brechas:** a sessão que perceber uma brecha no método abre uma issue com a etiqueta "brecha" (o que aconteceu, onde e quais tarefas pode afetar), sem depender das outras; toda sessão lista as brechas abertas ao começar e antes de fechar a sua tarefa, e a sessão principal analisa cada uma;
+- **adaptação:** se uma tarefa se sobrepuser a outra, depender de outra ou mudar algo que afete outra issue ou uma tarefa em andamento, as issues afetadas são ajustadas na hora, com um comentário que diz o que mudou e por quê, para o fluxo continuar coerente com várias sessões abertas.
+
+**Tarefas desta fase** (a ordem segue o *Roteiro de incrementos*):
+
+| Tarefa | O que entrega | Depende de |
+|---|---|---|
+| Regras definitivas | O núcleo do protocolo (item 1.2), no lugar do núcleo provisório | — |
+| Caderno de estudos mínimo | O repositório `caderno-de-estudos`, com perfil, conceitos, respostas, receitas, fila e desempenho (item 1.4) | — |
+| Avaliar plugins e conectores | A decisão, candidato por candidato, e a instalação dos aprovados (*Plugins e conectores em avaliação*) | — |
+| Estudar o áudio | Como usar a leitura em voz alta e o ditado no método (PA-3) | — |
+| Plugin de estudo | Estilo definitivo; skills de roteiro, pistas e fechamento; gancho de início de sessão (incremento 2) | Regras definitivas; caderno |
+| Revisão de erros e espaçada | Skill de revisão de erros, avaliador e revisão espaçada (incremento 3) | Plugin de estudo |
+| Medidas e acompanhamento | Medidas, retrato, níveis, revisão da semana, sequência de dias e calibração (incremento 5, sem os dados do chat comum) | Plugin de estudo |
+
+As skills de tarefa já têm issue própria (#1); as quatro perguntas dela são alinhadas na sessão principal antes da implementação.
+
+**Esperam:** o celular, o claude.ai, a nuvem, o ChatGPT e o Gemini, até haver uma versão mais palpável do método; o teste do plugin que chega pela conta, porque desligaria a cópia instalada de que as sessões abertas dependem; as configurações do VS Code, até a PA-7.
+
 # Parte A: Incremento 1, o núcleo em todo lugar
 
-**Objetivo:** mudar já o uso diário, em todos os lugares onde o Matheus conversa com uma IA, antes de construir o plugin. Pronto em um ou dois dias.
+**Objetivo:** o núcleo de verdade e o caderno de estudos, primeiro no computador, como base do plugin de estudo (ver *Implementação acelerada*). O celular, o claude.ai, a nuvem, o ChatGPT e o Gemini esperam uma versão mais palpável do método.
 
 ### Etapa 0: guardar o SGMF e registrar a memória
 
@@ -132,35 +180,33 @@ Decisões que moldam o plano:
 ### Etapa 1: o núcleo
 
 - **1.1 O repositório `ai-tutor`** vem da Etapa prévia; aqui recebe o núcleo, o mapa e as issues dos incrementos.
-- **1.2 Escrever o núcleo do protocolo** (`protocolo/nucleo.md`, umas 30 linhas), pela escada dos textos: o Claude faz perguntas para o Matheus achar os pontos; o Matheus escreve; o Claude revisa sem dar a frase pronta. Ao fim, o Claude confere se o texto cobre o conteúdo previsto (lista abaixo, para conferência, e não para cópia):
+- **1.2 Escrever o núcleo do protocolo** (`protocolo/nucleo.md`, umas 30 linhas), pelo modo revisor (*Implementação acelerada*): o Claude redige a partir das decisões do plano, e o Matheus revisa. Antes de 16/11, o Matheus escreveria, pela escada dos textos. Ao fim, o Claude confere se o texto cobre o conteúdo previsto (lista abaixo, para conferência, e não para cópia):
   - os **modos de interação** e como o Claude reconhece cada um;
   - a **escada** e quem sobe os degraus;
   - **perguntas em vez de suposições** (formulário onde existe; perguntas numeradas, com opções em letras, onde não existe);
   - **professor questionador**, exigente mas curto;
   - **fase de estudo × fase prática** (explicação em camadas só na fase de estudo);
   - **parte conceitual × parte mecânica**, com o "ensinar a buscar";
-  - o **registro** na caixa de entrada do Notion;
+  - o **registro** no caderno de estudos;
   - a **linha de estado** com o modo (ex.: "Modo: como fazer · passo 2 de 4");
   - a **transição entre planejar e executar**;
   - a **revisão de planos**: cada edição mostra o antigo e o novo e espera a aprovação do Matheus;
   - em conflito com instruções de um projeto (ex.: o estilo Aprendiz do SGMF, em pausa), o Claude pergunta qual vale.
-- **1.3 Levar o núcleo a todo lugar** (parte mecânica, com o Matheus fazendo o que ainda não domina):
+- **1.3 Levar o núcleo a todo lugar** (parte mecânica, com o Matheus fazendo o que ainda não domina). Por ora, só o Claude Code local, que já lê o núcleo provisório; os outros ambientes, e as verificações da execução ligadas a eles, esperam uma versão mais palpável do método (decidido em 16/11):
   - **Claude Code local, todos os projetos:** o `~/.claude/CLAUDE.md` importa o arquivo com a sintaxe `@` (fonte única);
   - **Claude Code na nuvem** (como no celular): um script de preparação do ambiente baixa o mesmo arquivo do repositório público para `~/.claude/CLAUDE.md` (a conferir na execução);
   - **claude.ai** (web, celular, tablet): a **versão curta**, escrita pelo Matheus a partir do núcleo (modo A) e conferida pelo Claude, vai para as Preferências;
   - **ChatGPT e Gemini:** a mesma versão curta (*Instruções personalizadas*; um *Gem*).
-- **1.4 Caixa de entrada no Notion:** uma página "Caderno: caixa de entrada" na Área do Conhecimento, onde o Claude (pelo conector do Notion, que já está ligado ao claude.ai e ao Claude Code) registra, de qualquer aparelho: **receitas** (escritas pelo Matheus), **respostas**, **perguntas para revisar** e **dívidas**. No incremento 2, tudo migra para o repositório `caderno-de-estudos`.
-- **1.5 Mapa e incrementos:** o plano já está neste repositório desde 16/11 (`docs/plano-do-metodo.md`, em revisão). Depois da aprovação e da divisão em etapas (issue #2), este arquivo fica com o mapa (Parte B), e cada incremento vira uma issue com checklist, num Project do GitHub, como no SGMF.
-- **1.6 Uso real e retrospectiva:** cerca de uma semana usando o núcleo no dia a dia; depois, uma retrospectiva curta escolhe o incremento 2 e ajusta o núcleo.
+- **1.4 Caderno de estudos mínimo** (16/11, no lugar da caixa de entrada no Notion, que só se justificava pelo acesso do celular): o repositório `Disciplinas-da-Faculdade` vira o `caderno-de-estudos`, com o caderno mínimo (perfil, conceitos, respostas, receitas, fila e desempenho). Ele guarda desde já as **receitas** (escritas pelo Matheus), as **respostas**, as **perguntas para revisar** e as **dívidas**. Até o conector existir, só o Claude Code no computador o alcança.
+- **1.5 Mapa e tarefas:** o plano já está neste repositório desde 16/11 (`docs/plano-do-metodo.md`, em revisão). Nesta fase, o trabalho segue em sessão principal e tarefas com issue e sessão própria (ver *Implementação acelerada*). Com o plano todo aprovado, este arquivo fica com o mapa (Parte B), e cada incremento vira uma issue com checklist, num Project do GitHub, como no SGMF.
+- **1.6 Uso no dia a dia** (16/11, no lugar da semana de uso com retrospectiva): depois da implementação, o teste é o uso de rotina; cada brecha percebida vira uma issue "brecha", e a sessão principal escolhe as próximas tarefas e ajusta o núcleo.
 
 ### Verificação do incremento 1
 
-- Numa sessão nova do Claude Code, em qualquer projeto, uma **pergunta rápida** recebe perguntas-guia, e não a resposta; um **"como fazer"** começa por "onde você procuraria?", e o Claude confere os comandos antes de rodá-los; um pedido **"urgente"** é resolvido e vira dívida na caixa de entrada.
-- O mesmo comportamento no claude.ai (web e celular), num teste com uma pergunta rápida.
-- Numa sessão do Claude Code na nuvem, o núcleo é carregado.
-- Um exercício de teste no ChatGPT e no Gemini segue os modos.
+- Numa sessão nova do Claude Code, em qualquer projeto, uma **pergunta rápida** recebe perguntas-guia, e não a resposta; um **"como fazer"** começa por "onde você procuraria?", e o Claude confere os comandos antes de rodá-los; um pedido **"urgente"** é resolvido e vira dívida no caderno.
+- Quando os outros ambientes entrarem (1.3): o mesmo comportamento no claude.ai (web e celular), num teste com uma pergunta rápida; o núcleo carregado numa sessão do Claude Code na nuvem; um exercício de teste no ChatGPT e no Gemini seguindo os modos.
 - A linha de estado mostra o modo.
-- A caixa de entrada recebe registros do computador e do celular.
+- O caderno recebe os registros das sessões no computador.
 - O mapa está no `ai-tutor`, e as issues dos incrementos existem.
 
 # Parte B: o mapa do método
@@ -194,7 +240,7 @@ O Claude reconhece o modo no começo de cada conversa, mostra-o na linha de esta
 | Revisões espaçadas | Celular ou tablet |
 | Continuar em outra máquina | Remote Control, com o computador ligado; Claude Code na web; ou uma sessão nova com `/tutor:retomar` |
 
-A vida real não segue o mapa à risca (Claude Code no celular, dúvidas rápidas no computador). Por isso, o núcleo vale em todos os lugares, e a regra é só esta: **a dúvida fica na conversa em que nasceu**, para entrar nos conceitos tocados e no fechamento; até o conector existir, o que for resolvido fora vai para a caixa de entrada.
+A vida real não segue o mapa à risca (Claude Code no celular, dúvidas rápidas no computador). Por isso, o núcleo vale em todos os lugares, e a regra é só esta: **a dúvida fica na conversa em que nasceu**, para entrar nos conceitos tocados e no fechamento; até o conector existir, o que for resolvido fora é registrado no caderno numa sessão do computador.
 
 ## Princípios de desenho
 
@@ -362,12 +408,12 @@ Conectores alcançam a web, o celular, o terminal e as sessões na nuvem; plugin
 
 ## Roteiro de incrementos (mapa de dependências)
 
-A ordem é uma sugestão: depois de cada retrospectiva, o Matheus escolhe o próximo.
+A ordem é uma sugestão: na sessão principal, o Matheus escolhe as próximas tarefas (ver *Implementação acelerada*).
 
 | Incremento | Entrega | Depende de |
 |---|---|---|
-| 1 | Núcleo em todo lugar; caixa de entrada no Notion; repositório `ai-tutor` com o mapa e as issues; SGMF guardado | — |
-| 2 | Amplia o plugin da Etapa prévia: estilo; skills `roteiro`, `pista`, `fechar`; `SessionStart` (com `git pull`); repositório `caderno-de-estudos` com o caderno mínimo (perfil, conceitos, respostas, receitas, fila, desempenho); migração da caixa de entrada | 1 |
+| 1 | Núcleo, primeiro no computador; caderno de estudos mínimo (perfil, conceitos, respostas, receitas, fila, desempenho); repositório `ai-tutor` com o mapa e as issues; SGMF guardado | — |
+| 2 | Amplia o plugin da Etapa prévia: estilo; skills `roteiro`, `pista`, `fechar`; `SessionStart` (com `git pull`) | 1 |
 | 3 | Revisão de erros (`revisar`, `avaliador`, armadilhas por área) e revisão espaçada (`revisao`) | 2 |
 | 4 | Conector mínimo no Cloudflare (perfil, fila, registrar resposta, coleta mínima do chat comum) | 2 |
 | 5 | Medidas, retrato, níveis, mapa de pré-requisitos, coleta automática, `observador`, revisão da semana, sequência de dias, esforço do dia e jogo da calibração | 2 (e 4, para os dados do chat comum) |
@@ -383,6 +429,8 @@ A ordem é uma sugestão: depois de cada retrospectiva, o Matheus escolhe o pró
 |---|---|
 | **O Matheus** | Núcleo e protocolo; versão curta; cada `SKILL.md`; estilo; perfil; explicações das páginas de conceito; receitas; respostas; reflexões e a parte escrita da revisão da semana; uma pergunta de revisão por sessão; mensagens de commit, issues e comentários; casos dos evals (em linguagem comum) |
 | **O Claude** (material de apoio e parte mecânica) | Perguntas, pistas, correções e notas; transcrições (prints, Samsung Notes); lista de armadilhas (com fonte, conferida pelo Matheus); retrato, números e gráficos (gerados); índices; resumo a cada mensagem; eventos e tarefas no Google; o mapa do método (cópia do plano aprovado); código mecânico já dominado |
+
+**Na implementação acelerada (16/11):** o Claude escreve também o núcleo e o protocolo, cada `SKILL.md`, o estilo, as mensagens de commit, as issues, os comentários e todo o código, e o Matheus revisa e aprova; o resto da linha do Matheus (perfil, receitas, respostas, reflexões, perguntas de revisão, casos dos evals) continua com ele. Vale até ele declarar o método implementado.
 
 O hook de quem escreve libera os caminhos do Claude e pede permissão nos demais.
 
@@ -436,18 +484,20 @@ flowchart LR
 
 **Conferência de 16/11** (versão 15): a leitura por seções (decisão de 04/11) foi suspensa e marcada nas duas seções onde aparece; a etapa 0.2 e o item 1.5 foram atualizados; os pontos em aberto novos não contradizem decisões anteriores, porque só abrem assuntos.
 
+**Conferência de 16/11** (versão 16): a caixa de entrada no Notion saiu de todos os pontos onde aparecia (itens 1.2 e 1.4, verificação do incremento 1, mapa de uso, roteiro), e a decisão de 29/10 foi marcada como substituída; o caderno mínimo passou do incremento 2 para o 1, sem mudar as dependências dos outros; os ambientes fora do computador esperam, e com eles as verificações da execução do script da nuvem e da versão curta; o modo revisor ganhou exceção no item 1.2 e em *Quem escreve o quê*; a aprovação em partes e a revisão do mapa antes da retrospectiva, discutidas na rodada, foram substituídas pela *Implementação acelerada* e não entram no plano.
+
 ## Pendências reunidas (levantamento de 14/11)
 
 O levantamento de 14/11 leu as 16 conversas do Claude Code sobre o método (20/10 a 05/11) e conferiu 387 itens do Matheus com os planos. Nenhum texto aprovado se perdeu; ficaram estas tarefas:
 
 | Pendência | Origem | Onde é tratada |
 |---|---|---|
-| Testar a cópia do plugin que vem pela conta, no terminal e no VS Code | Teste de 03/11 (passos 3 e 4) | *Etapa prévia* |
+| Testar a cópia do plugin que vem pela conta, no terminal e no VS Code | Teste de 03/11 (passos 3 e 4) | *Etapa prévia*; espera (ver *Implementação acelerada*) |
 | Primeiro uso real em outra máquina | *Etapa prévia* | *Etapa prévia* |
 | Decidir os candidatos de plugins e conectores, um a um, e instalar | Plano de plugins de 04/11 (passos 5 e 6) | *Plugins e conectores em avaliação* |
 | Testar o `/voice`, o ditado no celular e o Readwise Reader | Plano de plugins de 04/11 (passos 3 e 4) | PA-3 |
 | Skills de tarefa (ex.: `escrever-texto`), com 4 perguntas em aberto | Issue #1 (05/11) | Revisão do plano (issue #2, passo 4) |
-| Configurações do VS Code neste repositório: decididas em 27/10, sem incremento no roteiro | Conversa de 27/10 | *Roteiro de incrementos* (a decidir) |
+| Configurações do VS Code neste repositório: decididas em 27/10, sem incremento no roteiro | Conversa de 27/10 | Espera a PA-7 (terminal ou VS Code) |
 | Commits sem a linha de autoria do Claude no `Disciplinas-da-Faculdade`, que vai virar o `caderno-de-estudos` | Conversa de 03/11 | Incremento 2 |
 
 Resolvidos no próprio levantamento: a ida da conversa para o Windows (28/10), substituída pela vinda do plano para este repositório; e os contornos do gancho de bloqueio (16/11), corrigidos no plugin 0.2.0 e na regra do núcleo.
@@ -473,8 +523,9 @@ Resolvidos no próprio levantamento: a ida da conversa para o Windows (28/10), s
 
 - **PA-3, áudio (16/11):** o Matheus não gostou da `leitura-inteligente` como está (ela gera o áudio inteiro antes de tocar e fica lenta em arquivos grandes) e quer pensar com calma em como usar no método a leitura em voz alta e a captação de áudio (ditado). Material: a seção *Ouvir em vez de ler*; as medições de 04/11 (2 mil caracteres geram 153 s de áudio em 22 s; a reescrita de 50 mil caracteres levou 3 min 24 s); as 9 edições da leitura por seções, preparadas em 04/11 e não gravadas, guardadas no levantamento local; o `/voice` no computador e o ditado do app no celular; o Readwise Reader, a testar. Vira uma etapa própria.
 - **PA-4, central de tarefas e eventos (14/11):** hoje as tarefas e os compromissos ficam espalhados entre o Google Calendar (o mais usado), o Kanban e o calendário do Notion e o Kanban do GitHub, nos projetos de código. O Matheus quer um só lugar para os projetos pessoais, a vida pessoal e a faculdade. O plano centraliza só o estudo (Google Agenda e Tasks, incremento 7). Pede tempo para pensar.
-- **PA-5, reorganizar o Notion (14/11):** o Notion ficou de lado depois que o Kanban do GitHub e o Samsung Notes passaram a ser usados. O Matheus quer estudar como unir o que tem nele, para controlar o conteúdo das aulas e os trabalhos ao longo dos anos. Parte já está no plano (incremento 6: Área do Conhecimento, base única de Disciplinas, páginas antigas transformadas aos poucos; incremento 8: Samsung Notes); o novo é repensar o papel do Notion como um todo. Toca a PA-4, porque o Kanban do Notion aparece nas duas.
+- **PA-5, reorganizar o Notion (14/11):** o Notion ficou de lado depois que o Kanban do GitHub e o Samsung Notes passaram a ser usados. O Matheus quer estudar como unir o que tem nele, para controlar o conteúdo das aulas e os trabalhos ao longo dos anos. Parte já está no plano (incremento 6: Área do Conhecimento, base única de Disciplinas, páginas antigas transformadas aos poucos; incremento 8: Samsung Notes); o novo é repensar o papel do Notion como um todo. Toca a PA-4, porque o Kanban do Notion aparece nas duas. Dúvida de 16/11: o repositório `caderno-de-estudos` como fonte do conhecimento, com o Notion como vitrine sincronizada, vale o trabalho da sincronização (uma segunda cópia para manter)? As saídas incluem manter o Notion como vitrine, usá-lo só para a faculdade e as tarefas, ou trocá-lo por um leitor de Markdown que abra o próprio repositório. O caderno usa Markdown e planilha CSV simples, para servir a qualquer saída.
 - **PA-6, filtro de autorizações (16/11):** o Matheus quer uma política restritiva para as autorizações pontuais ("pode fazer por mim"), para não abusar da ajuda e se forçar a pensar. Desde a versão inicial do núcleo (item 1.2), o Claude analisa o contexto antes de aceitar uma autorização. As autorizações de 16/11 (commits e passo 2 da consolidação) foram só para acelerar a montagem do método. Liga-se à parte conceitual × parte mecânica, ao modo urgente com dívida e ao sinal de desinteresse.
+- **PA-7, terminal ou VS Code (16/11):** o Matheus cogita usar o Claude Code pelo terminal, em vez do VS Code, e quer saber se compensa. As configurações do VS Code decididas em 27/10 esperam essa resposta.
 
 O que depende só de teste está em *Verificações da execução*.
 
@@ -502,13 +553,13 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 27/10 | Diagramas construídos juntos; manual por projeto grande; revisores só para a parte mecânica; transição entre planejar e executar; aposentar o estilo Aprendiz SGMF (quando o SGMF voltar); gancho de bloqueio no plugin; a escada nas mãos do Matheus; cada chat é um fluxo independente |
 | 28/10, método | Medidas; rubrica; gabarito oculto e conferência por código; estilo com quatro elementos; padrões perguntados na hora; mão na massa até 3 vezes; lembrança livre; pré-teste de intuição; nota nas partes da tarefa; reenviar com `/tutor:roteiro`; dívida de aprendizado; 20 revisões por dia; modo prova; disputa com fonte; leitura fora do método; fluxo depois da aula; hook de quem escreve; blocos de 50 minutos (substituídos em 03/11); *AI Fluency* e Matuschak; sem experimento de comparação; painel só de leitura; evals do Matheus; ajuste automático da ajuda; modelos dos subagentes; partes dos colegas; sem metas nem sequências (as sequências foram substituídas em 31/10); professor exigente, mas curto; resumo com quatro itens; duas perguntas antes do roteiro; conflitos e remoções; revisão no celular pelo app ou no Notion; roteiro completo ou curto |
 | 28/10, perfil e integrações | Perfil escrito + retrato gerado; conceito por assunto, com a disciplina como etiqueta; cinco níveis com descida; mapa de pré-requisitos do Matheus; personalização em cinco pontos; evidência por reflexão + números; coleta + análise dos prompts; revisão da semana; conceitos antigos quando reaparecem, com diagnóstico no modo prova; perfil pelo conector, memórias sem cópias; explicações em camadas só na fase de estudo; armadilhas por área, com fonte; perguntas em todos os ambientes; Área do Conhecimento permanente; base única de Disciplinas; Google Agenda e Tasks; registro de tempo por bloco; tudo público; dois repositórios públicos (nomes definidos em 31/10); portfólio; servidor no Cloudflare; Samsung Notes por PDF no Drive; SGMF guardado no próprio repositório |
-| 29/10 | Implementar e refinar aos poucos (substitui "as três camadas antes do primeiro uso", de 28/10); mecanismos de alinhamento (mapa de dependências, quem escreve o quê, diagrama, conferência antes de cada aprovação); coleta mínima pelo conector; modo pergunta rápida (perguntas-guia, sem resposta de cara); como fazer (aprender a buscar, receita); urgente com dívida; mapa de uso como guia; mapa no repositório do método e incrementos como issues; incremento 1 = núcleo em todo lugar; caixa de entrada no Notion |
+| 29/10 | Implementar e refinar aos poucos (substitui "as três camadas antes do primeiro uso", de 28/10); mecanismos de alinhamento (mapa de dependências, quem escreve o quê, diagrama, conferência antes de cada aprovação); coleta mínima pelo conector; modo pergunta rápida (perguntas-guia, sem resposta de cara); como fazer (aprender a buscar, receita); urgente com dívida; mapa de uso como guia; mapa no repositório do método e incrementos como issues; incremento 1 = núcleo em todo lugar; caixa de entrada no Notion (substituída em 16/11 pelo caderno de estudos mínimo) |
 | 31/10 | Gamificação só pelo domínio confirmado; jogo da calibração com a confiança em porcentagem; confiança alta = 80% ou mais; mapa que acende, nível por área, conquistas, portfólio; desafio de tópico adiável ("Está com tempo?") e exigido para o nível 4; sequência de dias de estudo (regras ajustadas em 02/11), substituindo o "sem sequências"; app do Google publicado, sem verificação; V20 (servidor: conector e agendamentos; Actions: arquivos); V22 (gabaritos públicos, quando houver); V23 (Samsung Notes semanal); V24 (`ai-tutor` e `caderno-de-estudos`); revisão da semana pronta no domingo à noite, feita quando o Matheus quiser; sincronização no começo das sessões e uma vez por noite; ordem dos incrementos mantida; uma pergunta de revisão do Matheus por sessão |
 | 02/11 | Dia de estudo: 30 minutos no total, somando blocos de qualquer duração, ou, sem cronômetro, esforço de 5 ou mais com uma linha sobre o que foi feito; dia leve conta na tolerância de 2 dias; lembrete no segundo dia sem estudo ("amanhã é o último dia"), só no começo das sessões até o Tasks estar ligado; esforço do dia de 1 a 9, registrado junto do bloco ou no dia seguinte; valores dos pontos calibrados com dados, no incremento 9 |
 | 03/11 | Edições do plano aprovadas uma a uma; sessão livre, sem aviso de tempo nem de cansaço; sinal de desinteresse diante de respostas prontas repetidas; fluxo em plugin no `ai-tutor`; regra no núcleo; Remote Control para celular, tablet e navegador |
 | 04/11 | Critério para plugins e conectores de terceiros, com instalação decidida candidato por candidato; áudio como forma de acesso ao material; `leitura-inteligente` por seções (suspensa em 16/11, PA-3); Readwise Reader a testar para texto corrido; `/voice` e ditado do app, sem o Wispr Flow; plugin `tutor` vinculado à conta (a conferir) |
 | 14/11 | Plano único neste repositório, marcado "em revisão"; núcleo provisório; estilo e ganchos provisórios no plugin; sessões locais com nome, uma por issue, com GitHub Project, e um teste do Projeto do Claude; separar o SGMF antes; trabalhar a partir deste repositório depois do passo 3 da consolidação; áudio como etapa própria |
-| 16/11 | Textos e comandos de rotina com o Matheus, com autorizações pontuais possíveis (a filtrar, PA-6); o bloqueio ignora o corpo de heredoc; `cp`, `mv`, `patch` e `git apply` pedem aprovação; pedir aprovação antes de contornar um gancho; o pedido de aprovação continua igual no modo automático; skill `dissecar-comando` |
+| 16/11 | Textos e comandos de rotina com o Matheus, com autorizações pontuais possíveis (a filtrar, PA-6); o bloqueio ignora o corpo de heredoc; `cp`, `mv`, `patch` e `git apply` pedem aprovação; pedir aprovação antes de contornar um gancho; o pedido de aprovação continua igual no modo automático; skill `dissecar-comando`; revisão de plano no repositório com cópia de trabalho, gravada de uma vez no fim e conferida pelo `git diff`; implementação acelerada, sem degraus provisórios; modo revisor (o Claude produz, o Matheus revisa) até o método estar implementado; sessão principal e tarefas com issue e sessão própria (no máximo 2 ou 3 abertas); brechas em issues com a etiqueta "brecha"; adaptação das issues afetadas por mudanças; caderno de estudos mínimo no lugar da caixa de entrada; celular e outros ambientes esperam; teste do plugin pela conta espera; uso do dia a dia no lugar da semana de teste |
 
 ## Rastreabilidade dos comentários do Matheus
 
@@ -522,6 +573,7 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 03/11 | Ver e aprovar cada edição; blocos sem duração fixa; sessão livre; sinal de desinteresse; fluxo reproduzível em outras máquinas e parte do método; Remote Control; descobertas do teste pelo telefone; mesmas configurações em qualquer lugar | *Etapa prévia*; *Gamificação*; *Fluxo* |
 | 04/11 | Plugins e conectores que complementem o fluxo, decidindo depois o que baixar; leitura em áudio dentro do método, porque a skill fica lenta em arquivos grandes; conectores que contribuam com o aprendizado | *Plugins e conectores em avaliação*; *Ouvir em vez de ler*; *Medidas* |
 | 14/11 e 16/11 | Reunir tudo num plano único e dividi-lo em etapas, cada uma numa sessão com nome; trabalhar a partir deste repositório; separar o SGMF; repensar o áudio; central de tarefas e eventos; reorganizar o Notion; registrar os contornos do gancho; filtro de autorizações | *Pendências reunidas*; *Pontos em aberto*; *Decisões já tomadas*; issue #2 |
+| 16/11, rodada 1 | Como o modo de planejamento entra na revisão de um plano no repositório; quando dividir em tarefas; sessão principal e subsessões registradas em issues; brechas registradas por cada sessão e visíveis às outras; caixa de entrada × caderno (retrabalho); celular depois; terminal ou VS Code; implementar de verdade, sem provisórios; o Matheus como revisor; adaptar as issues quando algo mudar; GitHub ou Notion como centro do conhecimento | *Implementação acelerada*; *Etapa prévia*; Parte A; *Quem escreve o quê*; PA-5; PA-7 |
 
 ## Histórico das versões
 
@@ -532,7 +584,8 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 - **Versão 12 (31/10):** gamificação; decisões V20 a V24; repositórios `ai-tutor` e `caderno-de-estudos`; verificações da execução.
 - **Versão 13 (02/11):** esforço do dia e sequência ajustada.
 - **Versão 14 (03/11):** Etapa prévia; sessão livre; plugins, conectores e áudio (04/11).
-- **Versão 15 (16/11):** esta versão.
+- **Versão 15 (16/11):** plano no repositório; pendências reunidas; PA-3 a PA-6.
+- **Versão 16 (16/11):** esta versão.
 
 ## A parte do SGMF
 

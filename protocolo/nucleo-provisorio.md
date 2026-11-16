@@ -34,6 +34,7 @@ Vale para documentos, issues, comentários, mensagens de commit e qualquer texto
 - Só executar um plano com aprovação explícita ("aprovado", "pode executar"). "Continue" depois de uma interrupção não é aprovação.
 - Cada edição num plano passa pela aprovação do Matheus, com o antigo e o novo à vista. Nos computadores, o plugin `tutor` abre o pedido sozinho; onde não houver plugin, mostrar o antigo e o novo e esperar a resposta.
 - Ao mudar um plano depois de comentários dele: editar só os trechos que mudaram; abrir a versão nova com uma tabela "O que mudou"; juntar as decisões com perguntas antes de escrever; dividir planos grandes em partes. Ao fim de cada rodada, uma tabela liga cada comentário à edição feita e ao resultado.
+- **Plano que mora num repositório** (como `docs/plano-do-metodo.md`, no `ai-tutor`): no modo de planejamento, o Claude só edita o plano da sessão, então cada rodada trabalha numa cópia. Abrir: o Claude grava o plano na cópia e confere com `diff` se ela ficou idêntica. Revisar: edições pequenas na cópia, com a comparação. Fechar: depois do "aprovado", o Claude confere pelo git se o original mudou (se mudou, para e pergunta) e copia a versão aprovada por cima dele com o `cp`; o Matheus confere o `git diff` antes do commit.
 
 ## Perguntas e validação
 
@@ -48,6 +49,15 @@ Vale para documentos, issues, comentários, mensagens de commit e qualquer texto
 - Mensagens de commit, issues, comentários e outros textos de rotina: o Claude aponta os pontos que o texto precisa cobrir; o Matheus escreve com as próprias palavras; o Claude revisa sem dar a frase pronta.
 - Comandos de terminal que alteram algo: o Matheus monta com pistas do Claude; o Claude confere antes de rodar.
 - O Matheus pode autorizar o Claude a escrever e a rodar numa etapa. A autorização vale só para o que ele disser. Essas autorizações precisam ser tratadas com bastante cautela posteriormente, pois quero adotar uma política bem restritiva no que tange essas autorizações pontuais.
+
+## Implementação acelerada (desde 16/11)
+
+Vale até o Matheus declarar o método implementado (seção *Implementação acelerada* do plano do método). Enquanto valer, substitui a seção anterior e a escrita pelo Matheus prevista no plano:
+
+- **Modo revisor:** o Claude produz, e o Matheus revisa e aprova. O Claude escreve os textos de rotina (issues, comentários, mensagens de commit, edições de planos), as regras, as skills, o estilo e todo o código, sem deixar trechos para o Matheus completar (o "Aprender fazendo" do estilo Aprendiz fica suspenso); monta e roda os comandos, com o quadro explicativo. Continuam com o Matheus: perfil, receitas, respostas, reflexões, perguntas de revisão e casos dos evals.
+- **Publicar espera o "pode":** push, criar ou editar issues e comentários, criar etiquetas ou projetos, renomear repositórios e qualquer outra ação fora do computador esperam a confirmação do Matheus.
+- **Brechas:** ao perceber uma brecha no método, a sessão abre uma issue no `ai-tutor` com a etiqueta `brecha` (o que aconteceu, onde e quais tarefas pode afetar), sem depender das outras sessões. Ao começar e antes de fechar uma tarefa, listar as brechas abertas (`gh issue list --repo MatheusKubrusly/ai-tutor --label brecha`) e ler as que tocam o trabalho.
+- **Adaptação:** se uma tarefa se sobrepuser a outra, depender de outra ou mudar algo que afete outra issue ou uma tarefa em andamento, ajustar as issues afetadas na hora, com um comentário que diz o que mudou e por quê.
 
 ## Issues e commits
 
