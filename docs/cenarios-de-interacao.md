@@ -208,9 +208,8 @@ Linhas de estado, legendas e avisos que aparecem nas ferramentas do método. O M
 3. **Perfil por dispositivo:** para depois, com calma (o formato da declaração local e as regras de cada tipo de máquina).
 4. **Desenvolver código:** refinar as cinco situações, que ficaram como base.
 5. **Sinais:** a lista exata de palavras-chave e os nomes dos comandos (nas tarefas das regras definitivas, #3, e do plugin de estudo, #7).
-6. **Dúvida pontual:** confirmar que o perfil de resposta e o modo pergunta rápida a cobrem, sem skill própria.
-7. **Comportamento padrão por perfil:** validar a tabela skill por skill, na tarefa de cada skill, e preencher o que está "a definir".
-8. **Textos fixos:** revisar com calma o formato e o texto dos elementos da seção *Textos fixos*. Não é urgente; o estilo definitivo (#7) é o lugar natural para fixá-los.
+6. **Comportamento padrão por perfil:** validar a tabela skill por skill, na tarefa de cada skill, e preencher o que está "a definir".
+7. **Textos fixos:** revisar com calma o formato e o texto dos elementos da seção *Textos fixos*. Não é urgente; o estilo definitivo (#7) é o lugar natural para fixá-los.
 
 ## Já decidido nesta árvore (16/11)
 
@@ -225,3 +224,4 @@ Linhas de estado, legendas e avisos que aparecem nas ferramentas do método. O M
 - Tempo e esforço: um passo do `fechar`, mais o pedido solto tratado pelas regras.
 - Desafio de tópico: skill própria (`desafio`), oferecida pelo `fechar`.
 - Desenvolver código: as cinco situações valem como base.
+- Dúvida pontual: sem skill própria; o perfil de resposta e o modo pergunta rápida a cobrem.
