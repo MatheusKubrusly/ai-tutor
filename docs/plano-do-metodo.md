@@ -1,6 +1,16 @@
 # Plano: método de aprendizado com IA (tutor)
 
-**Em revisão.** Versão 18, de 16/11/2026. Desde essa data, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+**Em revisão.** Versão 19, de 17/11/2026. Desde 16/11, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+
+## O que mudou na versão 19 (17/11)
+
+Quarta rodada da revisão (passo 4 da issue #2): a lacuna do roteiro e as regras de 17/11 para várias sessões.
+
+| Seção | Mudança |
+|---|---|
+| *Roteiro de incrementos* | Entrega 2 com a skill `escrever-texto` (#1) e os ganchos de início de sessão (com as brechas e o lembrete das regras de área) e do perfil que dura; entrega 9 com a skill `desafio`; nota das tarefas transversais (#5, #6, #10, #12, #13) |
+| *Implementação acelerada* | Servidor no Cloudflare na lista "Esperam"; regra de várias sessões na mesma pasta; a trava do plano (#13) na tabela de tarefas |
+| Registros | Decisões, rastreabilidade, conferência e histórico |
 
 ## O que mudou na versão 18 (16/11)
 
@@ -174,6 +184,7 @@ Decisões que moldam o plano:
 - **sessão principal** (a sessão "ai-tutor · sessão principal"): alinha os pontos em aberto e o restante da revisão, transforma em tarefa o que ficar pronto para implementar, confere a coerência entre as áreas e, sempre que o Matheus volta a ela, lista as issues que aguardam a aprovação dele;
 - **sessões por área** (16/11): cada área tem uma sessão responsável pelas issues dela, uma de cada vez, e cada issue tem a etiqueta da sua área: "ai-tutor · regras e estilo" (regras definitivas, estilo de resposta, textos fixos), "ai-tutor · plugin" (skills, ganchos e subagentes), "ai-tutor · caderno e dados" (caderno, medidas, retrato e gráficos) e "ai-tutor · ferramentas e pesquisa" (ferramentas externas e áudio). As issues ficam no quadro "Implementação do método"; no máximo 2 ou 3 sessões ficam abertas ao mesmo tempo, escolhidas pelo Matheus;
 - **revisão** (16/11): ao terminar uma tarefa, a sessão da área move o cartão para "In review"; a sessão "ai-tutor · revisão" confere o trabalho contra o plano, a árvore de cenários e as regras e comenta na issue; a área corrige. Sem pendências, a revisão move o cartão para "Aguardando aprovação" e comenta "✅ Revisão sem pendências: aguardando a aprovação do Matheus"; com a aprovação dele, a issue fecha. A revisão só confere e aponta, sem implementar, para quem revisa não revisar o próprio trabalho. A coluna e o comentário existem porque avisos do GitHub não serviriam: as ações do Claude saem na conta do Matheus, e o GitHub não notifica alguém das próprias ações;
+- **várias sessões na mesma pasta** (17/11): a área de preparação do git é compartilhada, e o commit de uma sessão poderia levar um arquivo preparado por outra; por isso, cada sessão faz o `git add` e o `git commit` no mesmo comando, só com os próprios arquivos. Só a sessão principal edita este plano e a árvore de cenários; as áreas propõem mudanças nesses arquivos por comentário na issue. A trava que garante isso, mesmo se uma sessão esquecer a instrução, é a #13; a sessão principal também confere os commits e as issues das outras sessões sempre que o Matheus volta a ela;
 - **brechas:** a sessão que perceber uma brecha no método abre uma issue com a etiqueta "brecha" (o que aconteceu, onde e quais tarefas pode afetar), sem depender das outras; toda sessão lista as brechas abertas ao começar e antes de fechar a sua tarefa, e a sessão principal analisa cada uma;
 - **adaptação:** se uma tarefa se sobrepuser a outra, depender de outra ou mudar algo que afete outra issue ou uma tarefa em andamento, as issues afetadas são ajustadas na hora, com um comentário que diz o que mudou e por quê, para o fluxo continuar coerente com várias sessões abertas.
 
@@ -189,10 +200,11 @@ Decisões que moldam o plano:
 | Plugin de estudo (#7) | Plugin | Skills de roteiro, pistas e fechamento; ganchos de início de sessão e do perfil que dura (incremento 2) | Regras definitivas; caderno |
 | Revisão de erros e espaçada (#8) | Plugin | Skill de revisão de erros, avaliador e revisão espaçada (incremento 3) | Plugin de estudo |
 | Medidas e acompanhamento (#9) | Caderno e dados | Medidas, retrato, níveis, revisão da semana, sequência de dias e calibração (incremento 5, sem os dados do chat comum) | Plugin de estudo |
+| Trava do plano (#13) | Plugin | Gancho que reserva este plano e a árvore de cenários à sessão principal | — |
 
-As skills de tarefa têm issue própria (#1, área plugin); as quatro perguntas dela foram respondidas na sessão principal, com a árvore de cenários. A brecha do quadro dos comandos (#10) é da área regras e estilo.
+As skills de tarefa têm issue própria (#1, área plugin); as quatro perguntas dela foram respondidas na sessão principal, com a árvore de cenários. As brechas abertas são a do quadro dos comandos (#10, área regras e estilo) e a do gancho de bloqueio com variável no destino (#12, área plugin).
 
-**Esperam:** o celular, o claude.ai, a nuvem, o ChatGPT e o Gemini, até haver uma versão mais palpável do método; o teste do plugin que chega pela conta, porque desligaria a cópia instalada de que as sessões abertas dependem; as configurações do VS Code, até a PA-7.
+**Esperam:** o celular, o claude.ai, a nuvem, o ChatGPT e o Gemini, até haver uma versão mais palpável do método; com eles, o servidor no Cloudflare (entrega 4), porque o papel principal dele é levar o método a esses ambientes (17/11); o teste do plugin que chega pela conta, porque desligaria a cópia instalada de que as sessões abertas dependem; as configurações do VS Code, até a PA-7.
 
 # Parte A: Incremento 1, o núcleo em todo lugar
 
@@ -440,15 +452,17 @@ A ordem é uma sugestão: na sessão principal, o Matheus escolhe as próximas t
 | Incremento | Entrega | Depende de |
 |---|---|---|
 | 1 | Núcleo, primeiro no computador; caderno de estudos mínimo (perfil, conceitos, respostas, receitas, fila, desempenho); repositório `ai-tutor` com o mapa e as issues; SGMF guardado | — |
-| 2 | Amplia o plugin da Etapa prévia: estilo; skills `roteiro`, `pista`, `fechar`; `SessionStart` (com `git pull`) | 1 |
+| 2 | Amplia o plugin da Etapa prévia: estilo; skills `roteiro`, `pista`, `fechar` e `escrever-texto` (#1); ganchos de início de sessão (`SessionStart`, com `git pull`, as brechas abertas e o lembrete das regras de área) e do perfil que dura | 1 |
 | 3 | Revisão de erros (`revisar`, `avaliador`, armadilhas por área) e revisão espaçada (`revisao`) | 2 |
 | 4 | Conector mínimo no Cloudflare (perfil, fila, registrar resposta, coleta mínima do chat comum) | 2 |
 | 5 | Medidas, retrato, níveis, mapa de pré-requisitos, coleta automática, `observador`, revisão da semana, sequência de dias, esforço do dia e jogo da calibração | 2 (e 4, para os dados do chat comum) |
 | 6 | Notion completo: Área do Conhecimento, Disciplinas, Registro de estudo, Semanas, sincronização | 2 e 4 |
 | 7 | Google: Tasks e Agenda | 4 |
 | 8 | Samsung Notes | 2 (e 7, para o lembrete) |
-| 9 | Portfólio e gamificação (PA-2) | 5 |
+| 9 | Portfólio e gamificação (PA-2), com a skill `desafio`, que a skill `fechar` passa a oferecer quando existir | 5 |
 | 10 | Painel, evals, `aula`, `simulado`, `abrir-projeto`, `instalar.sh` | 2 |
+
+Tarefas transversais, fora das entregas (17/11): a avaliação de plugins, conectores e outras ferramentas de IA (#5), cujos candidatos se espalham por várias entregas; o estudo do áudio (#6, PA-3); e o que cuida do próprio ambiente de trabalho, como a trava do plano (#13) e as brechas (#10 e #12).
 
 ## Quem escreve o quê
 
@@ -516,6 +530,8 @@ flowchart LR
 **Conferência de 16/11** (versão 17): a regra *Textos* virou o grau padrão da escada da skill `escrever-texto`, sem contradizer *Quem escreve o quê*, porque o padrão continua sendo o Matheus escrever, e o grau "gerado" só entra com o sinal dele e com o *nunca só aceitar*; o modo urgente passou a ser um caso do perfil de resposta, e a dívida única ganhou níveis; a parte estética deixou de ser do Claude quando o Matheus não domina, e a exceção do sinal de desinteresse foi ajustada para "tarefas e partes dominadas"; o desafio de tópico e o registro de tempo, já descritos em *Gamificação* e *Medidas*, ganharam onde morar (a skill `desafio` e um passo do `fechar`); a lista do item 1.2 ganhou o perfil de resposta, os níveis de dívida e o *nunca só aceitar*.
 
 **Conferência de 16/11** (versão 18): as sessões de tarefa viraram sessões por área, sem mudar as tarefas nem as dependências; o estilo de resposta saiu do plugin de estudo para uma tarefa própria (#11), que depende das regras definitivas, como o plugin; a sessão de revisão não implementa, e a palavra final de fechar uma issue continua sendo do Matheus; o item 1.5 foi ajustado; a sessão principal passou a se chamar "ai-tutor · sessão principal".
+
+**Conferência de 17/11** (versão 19): a skill `desafio` ficou na entrega 9, onde a PA-2 já punha o desafio de tópico, e a `fechar` (entrega 2) só passa a oferecê-la quando ela existir; a `escrever-texto` entrou na entrega 2, que depende das regras definitivas, como as outras skills dela; o servidor (entrega 4) entrou com nome na lista "Esperam", sem mudar as dependências; a regra de várias sessões na mesma pasta repete a do núcleo provisório, que veio antes do plano nesta vez por urgência (as sessões de área estavam para abrir).
 
 ## Pendências reunidas (levantamento de 14/11)
 
@@ -592,6 +608,7 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 04/11 | Critério para plugins e conectores de terceiros, com instalação decidida candidato por candidato; áudio como forma de acesso ao material; `leitura-inteligente` por seções (suspensa em 16/11, PA-3); Readwise Reader a testar para texto corrido; `/voice` e ditado do app, sem o Wispr Flow; plugin `tutor` vinculado à conta (a conferir) |
 | 14/11 | Plano único neste repositório, marcado "em revisão"; núcleo provisório; estilo e ganchos provisórios no plugin; sessões locais com nome, uma por issue, com GitHub Project, e um teste do Projeto do Claude; separar o SGMF antes; trabalhar a partir deste repositório depois do passo 3 da consolidação; áudio como etapa própria |
 | 16/11 | Textos e comandos de rotina com o Matheus, com autorizações pontuais possíveis (a filtrar, PA-6); o bloqueio ignora o corpo de heredoc; `cp`, `mv`, `patch` e `git apply` pedem aprovação; pedir aprovação antes de contornar um gancho; o pedido de aprovação continua igual no modo automático; skill `dissecar-comando`; revisão de plano no repositório com cópia de trabalho, gravada de uma vez no fim e conferida pelo `git diff`; implementação acelerada, sem degraus provisórios; modo revisor (o Claude produz, o Matheus revisa) até o método estar implementado; sessão principal e tarefas com issue e sessão própria (no máximo 2 ou 3 abertas); brechas em issues com a etiqueta "brecha"; adaptação das issues afetadas por mudanças; caderno de estudos mínimo no lugar da caixa de entrada; celular e outros ambientes esperam; teste do plugin pela conta espera; uso do dia a dia no lugar da semana de teste; abertura da cópia de trabalho pelo terminal integrado; filtro de autorizações (PA-6): adaptar, nunca bloquear; perfil de resposta, com três sinais (palavra-chave, perfil que dura, comando por pedido); dívida em três níveis; *nunca só aceitar*; skill `escrever-texto` com escada de ajuda; dúvida pontual sem skill própria; skill `desafio`, oferecida pelo `fechar`; registro de tempo no `fechar`; explicação em todo comando; ChatGPT e Gemini fora das prioridades; dispositivos para depois; sessões por área (regras e estilo; plugin; caderno e dados; ferramentas e pesquisa), com etiquetas no GitHub; sessão própria de revisão, que só confere e aponta; colunas "In review" e "Aguardando aprovação", com comentário padrão; estilo de resposta definitivo separado do plugin de estudo (#11); sessão principal chamada "ai-tutor · sessão principal" |
+| 17/11 | Várias sessões na mesma pasta: `git add` e `git commit` no mesmo comando, e plano e árvore só na sessão principal; ganchos de reforço feitos pela sessão de plugin (trava do plano na #13; lembrete das regras de área no gancho de início de sessão da #7); a sessão principal confere as outras sessões sempre que o Matheus volta; `escrever-texto` na entrega 2 e `desafio` na entrega 9; tarefas transversais fora das entregas; servidor no Cloudflare na lista "Esperam" |
 
 ## Rastreabilidade dos comentários do Matheus
 
@@ -608,6 +625,7 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 16/11, rodada 1 | Como o modo de planejamento entra na revisão de um plano no repositório; quando dividir em tarefas; sessão principal e subsessões registradas em issues; brechas registradas por cada sessão e visíveis às outras; caixa de entrada × caderno (retrabalho); celular depois; terminal ou VS Code; implementar de verdade, sem provisórios; o Matheus como revisor; adaptar as issues quando algo mudar; GitHub ou Notion como centro do conhecimento | *Implementação acelerada*; *Etapa prévia*; Parte A; *Quem escreve o quê*; PA-5; PA-7 |
 | 16/11, rodada 2 | Bloquear ou se adaptar aos pedidos de resposta pronta; perfil de resposta pela pressa e pelo interesse; formas de sinalizar; níveis de dívida; árvore de cenários sem skills sobrepostas; textos com graus de ajuda, tamanhos e formatos; código com metodologia própria; comandos montados pelo Matheus e sempre explicados; quadro dos comandos incompleto; outras IAs só quando ajudarem mais; dispositivos depois; textos fixos | *Modos de interação*; *Trabalhar*; *Arquitetura*; itens 1.2 e 1.3; PA-6; PA-8; [árvore de cenários](cenarios-de-interacao.md) |
 | 16/11, rodada 3 | Subdividir as sessões por responsabilidade; um papel fixo de revisão; deixar claro quando uma issue fica sem pendências e espera a aprovação dele | *Implementação acelerada* (sessões e tarefas); item 1.5 |
+| 17/11, rodada 4 | O servidor no Cloudflare no plano; a que entrega pertencem as tarefas de hoje; a lacuna do roteiro; não afetar as três sessões de área; como garantir que as outras sessões sigam o núcleo; auditoria das outras sessões | *Roteiro de incrementos*; *Implementação acelerada* (esperam, sessões, tarefas); #13; #7 |
 
 ## Histórico das versões
 
@@ -621,7 +639,8 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 - **Versão 15 (16/11):** plano no repositório; pendências reunidas; PA-3 a PA-6.
 - **Versão 16 (16/11):** implementação acelerada; cópia de trabalho; caderno no lugar da caixa de entrada.
 - **Versão 17 (16/11):** decisões da árvore de cenários (perfil de resposta, dívida em níveis, `escrever-texto`, PA-6).
-- **Versão 18 (16/11):** esta versão.
+- **Versão 18 (16/11):** sessões por área, sessão de revisão e coluna de aprovação.
+- **Versão 19 (17/11):** esta versão.
 
 ## A parte do SGMF
 
