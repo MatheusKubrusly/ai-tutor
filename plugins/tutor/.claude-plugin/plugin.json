@@ -1,5 +1,5 @@
 {
   "name": "tutor",
-  "description": "Método de aprendizado com IA. Por enquanto: pede aprovação antes de editar um plano ou as regras do método, bloqueia a edição de arquivos por script, registra os comandos do Claude e aplica o estilo de resposta Aprendiz.",
-  "version": "0.2.1"
+  "description": "Método de aprendizado com IA. Por enquanto: pede aprovação antes de editar um plano ou as regras do método, bloqueia a edição de arquivos por script, reserva o plano do método e a árvore de cenários à sessão principal (provisório, na implementação acelerada), registra os comandos do Claude e aplica o estilo de resposta Aprendiz.",
+  "version": "0.3.0"
 }

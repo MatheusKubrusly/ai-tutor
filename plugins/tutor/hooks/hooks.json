@@ -18,6 +18,15 @@
             "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/bloquear-edicao-por-script.mjs"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/reservar-plano-a-sessao-principal.mjs"
+          }
+        ]
       }
     ],
     "PostToolUse": [

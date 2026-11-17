@@ -6,6 +6,7 @@ Por enquanto, o plugin `tutor` traz uma versão provisória do ambiente de traba
 
 - **Aprovação dos planos e das regras:** pede aprovação antes de cada edição num plano do Claude Code (`~/.claude/plans/`), no plano do método (`docs/plano-do-metodo.md`) e nas regras (`protocolo/`). Sem isso, o modo de planejamento e o modo automático gravam esses arquivos sem perguntar, e fica difícil conferir se cada comentário entrou da forma certa.
 - **Bloqueio da edição por script:** barra os comandos de terminal que gravam em arquivos do projeto por fora das ferramentas de edição (por exemplo, `sed -i` ou `> arquivo`), para toda mudança aparecer na comparação. Para `cp`, `mv`, `patch` e `git apply` com destino no projeto, pede aprovação.
+- **Plano e árvore de cenários só na sessão principal (provisório):** enquanto durar a implementação acelerada do método, barra a edição do plano do método (`docs/plano-do-metodo.md`) e da árvore de cenários (`docs/cenarios-de-interacao.md`) em qualquer sessão que não se chame "ai-tutor · sessão principal" (o nome dado com `/rename`). Vale para as ferramentas de edição e para comandos como `cp`, `mv`, `rm` e `git restore`. As outras sessões propõem as mudanças por comentário na issue. Sai do plugin quando o método for declarado implementado.
 - **Registro do terminal:** grava cada comando que o Claude roda, com a saída, em `~/.claude/logs/terminal.log`.
 - **Estilo de resposta "Aprendiz":** o Claude faz a tarefa ensinando (disseca cada comando novo, mostra um glossário antes de cada código e explica o porquê das escolhas). Vale sozinho enquanto o plugin estiver ligado.
 - **Skill `/tutor:dissecar-comando`:** explica, parte por parte, um comando de terminal, sem rodá-lo.
@@ -39,6 +40,10 @@ A versão nova vale na próxima sessão, ou depois de `/reload-plugins` numa ses
 ## Acompanhar os comandos do Claude
 
 Num terminal, rode `tail -f ~/.claude/logs/terminal.log`. O `tail` mostra o fim do arquivo, e o `-f` continua mostrando as linhas novas enquanto elas chegam. Para parar, `Ctrl+C`.
+
+## Testar os ganchos
+
+Na pasta do repositório, rode `node --test`. O Node procura os arquivos terminados em `.test.mjs` (na pasta `testes/`) e roda cada um; no fim, mostra quantos testes passaram e quantos falharam.
 
 ## Onde o fluxo vale
 
