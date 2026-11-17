@@ -1,6 +1,20 @@
 # Plano: método de aprendizado com IA (tutor)
 
-**Em revisão.** Versão 16, de 16/11/2026. Desde essa data, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+**Em revisão.** Versão 17, de 16/11/2026. Desde essa data, este arquivo é a fonte do plano; antes, ele ficava só no computador do Matheus (`~/.claude/plans/`). O andamento fica na issue #2.
+
+## O que mudou na versão 17 (16/11)
+
+Segunda rodada da revisão (passo 4 da issue #2): as decisões da sessão principal de 16/11, registradas antes na [árvore de cenários](cenarios-de-interacao.md) e nas issues.
+
+| Seção | Mudança |
+|---|---|
+| *Modos de interação* | Perfil de resposta e dívida em três níveis, no lugar do modo urgente com dívida única; referência à árvore de cenários, que traz o modo *Desenvolver código* como base |
+| *Trabalhar* | Parte mecânica e estética com o Claude só quando o Matheus domina; *nunca só aceitar*; textos pela skill `escrever-texto`; explicação em todo comando |
+| Item 1.2 | A lista ganha o perfil de resposta, os níveis de dívida e o *nunca só aceitar* |
+| Item 1.3 | ChatGPT e Gemini fora das prioridades |
+| *Arquitetura* | Skills `escrever-texto` e `desafio`; plugin 0.2.1 |
+| *Pontos em aberto* | PA-6 decidido; PA-8 novo (textos fixos) |
+| Registros | Decisões, rastreabilidade, conferência e histórico |
 
 ## O que mudou na versão 16 (16/11)
 
@@ -182,6 +196,7 @@ As skills de tarefa já têm issue própria (#1); as quatro perguntas dela são 
 - **1.1 O repositório `ai-tutor`** vem da Etapa prévia; aqui recebe o núcleo, o mapa e as issues dos incrementos.
 - **1.2 Escrever o núcleo do protocolo** (`protocolo/nucleo.md`, umas 30 linhas), pelo modo revisor (*Implementação acelerada*): o Claude redige a partir das decisões do plano, e o Matheus revisa. Antes de 16/11, o Matheus escreveria, pela escada dos textos. Ao fim, o Claude confere se o texto cobre o conteúdo previsto (lista abaixo, para conferência, e não para cópia):
   - os **modos de interação** e como o Claude reconhece cada um;
+  - o **perfil de resposta** (pressa e interesse, só com o sinal do Matheus), os **níveis de dívida** e o **nunca só aceitar** (16/11);
   - a **escada** e quem sobe os degraus;
   - **perguntas em vez de suposições** (formulário onde existe; perguntas numeradas, com opções em letras, onde não existe);
   - **professor questionador**, exigente mas curto;
@@ -196,7 +211,7 @@ As skills de tarefa já têm issue própria (#1); as quatro perguntas dela são 
   - **Claude Code local, todos os projetos:** o `~/.claude/CLAUDE.md` importa o arquivo com a sintaxe `@` (fonte única);
   - **Claude Code na nuvem** (como no celular): um script de preparação do ambiente baixa o mesmo arquivo do repositório público para `~/.claude/CLAUDE.md` (a conferir na execução);
   - **claude.ai** (web, celular, tablet): a **versão curta**, escrita pelo Matheus a partir do núcleo (modo A) e conferida pelo Claude, vai para as Preferências;
-  - **ChatGPT e Gemini:** a mesma versão curta (*Instruções personalizadas*; um *Gem*).
+  - **ChatGPT e Gemini:** fora das prioridades (16/11). Entram só quando houver um cenário em que ajudem mais que o Claude (por exemplo, o Gemini numa aula gravada em vídeo), levando o perfil do Matheus guardado no caderno; os candidatos estão nas issues #5 e #6.
 - **1.4 Caderno de estudos mínimo** (16/11, no lugar da caixa de entrada no Notion, que só se justificava pelo acesso do celular): o repositório `Disciplinas-da-Faculdade` vira o `caderno-de-estudos`, com o caderno mínimo (perfil, conceitos, respostas, receitas, fila e desempenho). Ele guarda desde já as **receitas** (escritas pelo Matheus), as **respostas**, as **perguntas para revisar** e as **dívidas**. Até o conector existir, só o Claude Code no computador o alcança.
 - **1.5 Mapa e tarefas:** o plano já está neste repositório desde 16/11 (`docs/plano-do-metodo.md`, em revisão). Nesta fase, o trabalho segue em sessão principal e tarefas com issue e sessão própria (ver *Implementação acelerada*). Com o plano todo aprovado, este arquivo fica com o mapa (Parte B), e cada incremento vira uma issue com checklist, num Project do GitHub, como no SGMF.
 - **1.6 Uso no dia a dia** (16/11, no lugar da semana de uso com retrospectiva): depois da implementação, o teste é o uso de rotina; cada brecha percebida vira uma issue "brecha", e a sessão principal escolhe as próximas tarefas e ajusta o núcleo.
@@ -215,7 +230,7 @@ Tudo abaixo é a noção do todo. Cada parte entra no incremento indicado no *Ro
 
 ## Modos de interação (decisões de 29/10)
 
-O Claude reconhece o modo no começo de cada conversa, mostra-o na linha de estado, e o Matheus pode trocar.
+O Claude reconhece o modo no começo de cada conversa, mostra-o na linha de estado, e o Matheus pode trocar. A [árvore de cenários](cenarios-de-interacao.md) (16/11) liga cada cenário de conversa ao modo ou à skill que o cobre, traz o comportamento padrão de cada skill por perfil de resposta e, como base a refinar, o modo *Desenvolver código*.
 
 - **Pergunta rápida** (ex.: "o que é heterocedasticidade?", para revisar ou conhecer um conceito): sem roteiro e sem resposta de cara. Perguntas-guia curtas, partindo do que o Matheus já sabe ou intui, até ele chegar à resposta; se travar, a escada. No fim, o Claude confirma e completa em poucas linhas, e uma pergunta vai para a revisão. Se o Matheus quiser aprofundar, a explicação em camadas fica para a fase de estudo.
 - **Como fazer** (ex.: "conectar a rede com autenticação no Hyprland"): sem a solução pronta. O objetivo é **aprender a buscar**, para reproduzir depois sem depender da IA, mesmo com menos profundidade:
@@ -227,7 +242,7 @@ O Claude reconhece o modo no começo de cada conversa, mostra-o na linha de esta
 
   Critério de pronto: o Matheus conseguiria refazer sem IA, com a receita e a fonte. Uma tarefa já dominada (feita sozinho 3 vezes, a última há menos de 30 dias) o Claude pode fazer e explicar.
 - **Estudo ou tarefa grande:** `/tutor:roteiro` (completo ou curto) e o fluxo de uma sessão de estudo (abaixo).
-- **Urgente** (o Matheus diz "urgente"): o Claude resolve, com explicação curta, e a tarefa vira **dívida de aprendizado**, com a receita a escrever e uma pergunta para depois.
+- **Atalho pelo perfil de resposta** (16/11, no lugar do modo urgente com dívida única): o Matheus sinaliza a pressa e o interesse do momento, por palavra-chave ("rápido", "urgente"), por um perfil que dura (ligado por comando) ou por um comando por pedido; o Claude nunca oferece o atalho. Com pressa, o Claude responde ou resolve direto, com explicação curta, e registra uma **dívida de aprendizado** no nível que o assunto pede: **alto** (área de estudo, ou assunto que volta: refazer sem ajuda, receita ou explicação escrita e perguntas de revisão), **médio** (periférico, ou de fora e repetido: duas ou três perguntas) ou **baixo** (fora da área e pontual: uma pergunta de checagem). O Claude propõe o nível com o porquê, e o Matheus pode trocar. A dúvida pontual não ganha skill própria: este perfil e a pergunta rápida a cobrem.
 
 ## Mapa de uso (guia, não regra)
 
@@ -279,10 +294,10 @@ Cinco momentos: **abrir → trabalhar → revisar erros → fechar → revisar d
 - **Ajuste automático da ajuda**, com aviso (em observação).
 - **Explicação do jeito que funciona**, segundo o perfil.
 - **Avançar de parte:** o Claude sugere; o Matheus decide.
-- **Textos:** o Matheus escreve todas as versões; o Claude revisa sem dar a frase pronta (até cerca de 5 pontos por rodada); critério de pronto em 4 pontos.
-- **Parte conceitual × mecânica:** a conceitual é do Matheus; a mecânica não dominada, ele aprende a buscar e faz; a dominada, o Claude faz e explica; a estética, o Claude faz e diz o que mudou; o que vale automatizar, o Claude aponta. Revisores automáticos conferem a parte mecânica.
+- **Textos:** pela skill `escrever-texto` (16/11), com uma escada de ajuda: sozinho, ideias, com ajuda e gerado. O padrão sem sinal é "com ajuda": o Matheus escreve as versões, e o Claude revisa sem dar a frase pronta (até cerca de 5 pontos por rodada), com critério de pronto em 4 pontos. O "gerado" só entra com o sinal do Matheus. O tipo, o tamanho e o formato do texto são deduzidos pelo contexto e mostrados na linha de estado.
+- **Parte conceitual × mecânica:** a conceitual é do Matheus; a mecânica e a estética não dominadas, ele aprende a buscar e faz; as dominadas, o Claude faz e explica; o que vale automatizar, o Claude aponta. O Claude se adapta e nunca bloqueia, mas o padrão é o Matheus pôr a mão em tudo o que não domina (16/11). **Nunca só aceitar:** quando o Claude gera um texto ou um código de peso, o Matheus participa; com tempo, ele prevê antes e responde uma pergunta de entendimento depois; com pressa, faz uma revisão dirigida de dois ou três pontos. Revisores automáticos conferem a parte mecânica.
 - **Precisão do tutor:** gabarito (quando houver, em `gabaritos/`, público; o avaliador o lê, e o Matheus não o abre antes de tentar), conferência por código, incerteza dita às claras.
-- **Conceitos novos** (1 ou 2 por tarefa), **dicas do manual**, **sessão livre, sem aviso de tempo nem de cansaço**; **sinal de desinteresse:** diante de uma sequência prolongada de pedidos de resposta pronta, sem tentativa nem perguntas sobre o porquê, o Claude sinaliza uma vez, citando o que viu, para o Matheus perceber que não está aprendendo e decidir se volta ao método (não bloqueia; urgentes repetidos contam; tarefas dominadas e parte estética, não), **padrões na forma de pensar** (perguntados na hora), **comandos de terminal** (o quadro vem depois quando o Matheus monta; antes quando o Claude roda).
+- **Conceitos novos** (1 ou 2 por tarefa), **dicas do manual**, **sessão livre, sem aviso de tempo nem de cansaço**; **sinal de desinteresse:** diante de uma sequência prolongada de pedidos de resposta pronta, sem tentativa nem perguntas sobre o porquê, o Claude sinaliza uma vez, citando o que viu, para o Matheus perceber que não está aprendendo e decidir se volta ao método (não bloqueia; atalhos repetidos contam; tarefas e partes dominadas, não), **padrões na forma de pensar** (perguntados na hora), **comandos de terminal** (o quadro vem depois quando o Matheus monta; antes quando o Claude roda; todo comando rodado tem explicação, mesmo os dominados, mais curta nos de rotina; a escada de comandos está em estudo na árvore de cenários).
 
 ### 3. Revisar erros: ciclo em 6 fases
 
@@ -369,7 +384,7 @@ Rubrica de qualidade de 0 a 4 (a ajuda fica na coluna do degrau). Medidas: ganho
 |---|---|
 | Núcleo (`CLAUDE.md` global, Preferências, instruções das outras IAs) | O que vale em toda conversa, desde o incremento 1 |
 | Estilo `tutor` | O formato das respostas no Claude Code |
-| Skills | Procedimentos: `roteiro`, `pista`, `revisar`, `fechar`, `revisao`, `retomar`, `aula`, `simulado`, `notas`, `semana`, `importar`, `publicar`, `dissecar`, `abrir-projeto` |
+| Skills | Procedimentos: `roteiro`, `pista`, `revisar`, `fechar`, `revisao`, `retomar`, `aula`, `simulado`, `notas`, `semana`, `importar`, `publicar`, `dissecar`, `abrir-projeto`, `escrever-texto` e `desafio` (as duas últimas decididas em 16/11) |
 | Subagentes | `avaliador` (modelo forte), `revisor-mecanico` e `observador` (modelo rápido) |
 | Hooks | Núcleo depois de compactar e `git pull` no início da sessão (`SessionStart`), resumo a cada mensagem, coleta, proteções, registro do terminal, aprovação das edições do plano |
 | Mod `painel` | Quadro só de leitura no VS Code, com a cola dos comandos |
@@ -377,7 +392,7 @@ Rubrica de qualidade de 0 a 4 (a ajuda fica na coluna do degrau). Medidas: ganho
 | GitHub Actions (`caderno-de-estudos`) | Gerar retrato, gráficos e dados do portfólio a cada push |
 | Evals | Testes do comportamento do tutor, com os casos definidos pelo Matheus |
 
-**Provisório (16/11):** enquanto o núcleo e o estilo `tutor` não são escritos, valem o núcleo provisório (`protocolo/nucleo-provisorio.md`, importado pelo `~/.claude/CLAUDE.md`) e o plugin `tutor` 0.2.0: estilo Aprendiz, bloqueio da edição por script (com pedido de aprovação para `cp`, `mv`, `patch` e `git apply`), registro do terminal, `/tutor:dissecar-comando` e aprovação das edições dos planos e das regras.
+**Provisório (16/11):** enquanto o núcleo e o estilo `tutor` não são escritos, valem o núcleo provisório (`protocolo/nucleo-provisorio.md`, importado pelo `~/.claude/CLAUDE.md`) e o plugin `tutor` 0.2.1: estilo Aprendiz (com o quadro dos comandos ampliado em 16/11, depois da brecha #10), bloqueio da edição por script (com pedido de aprovação para `cp`, `mv`, `patch` e `git apply`), registro do terminal, `/tutor:dissecar-comando` e aprovação das edições dos planos e das regras.
 
 ### Plugins e conectores em avaliação (04/11)
 
@@ -486,6 +501,8 @@ flowchart LR
 
 **Conferência de 16/11** (versão 16): a caixa de entrada no Notion saiu de todos os pontos onde aparecia (itens 1.2 e 1.4, verificação do incremento 1, mapa de uso, roteiro), e a decisão de 29/10 foi marcada como substituída; o caderno mínimo passou do incremento 2 para o 1, sem mudar as dependências dos outros; os ambientes fora do computador esperam, e com eles as verificações da execução do script da nuvem e da versão curta; o modo revisor ganhou exceção no item 1.2 e em *Quem escreve o quê*; a aprovação em partes e a revisão do mapa antes da retrospectiva, discutidas na rodada, foram substituídas pela *Implementação acelerada* e não entram no plano.
 
+**Conferência de 16/11** (versão 17): a regra *Textos* virou o grau padrão da escada da skill `escrever-texto`, sem contradizer *Quem escreve o quê*, porque o padrão continua sendo o Matheus escrever, e o grau "gerado" só entra com o sinal dele e com o *nunca só aceitar*; o modo urgente passou a ser um caso do perfil de resposta, e a dívida única ganhou níveis; a parte estética deixou de ser do Claude quando o Matheus não domina, e a exceção do sinal de desinteresse foi ajustada para "tarefas e partes dominadas"; o desafio de tópico e o registro de tempo, já descritos em *Gamificação* e *Medidas*, ganharam onde morar (a skill `desafio` e um passo do `fechar`); a lista do item 1.2 ganhou o perfil de resposta, os níveis de dívida e o *nunca só aceitar*.
+
 ## Pendências reunidas (levantamento de 14/11)
 
 O levantamento de 14/11 leu as 16 conversas do Claude Code sobre o método (20/10 a 05/11) e conferiu 387 itens do Matheus com os planos. Nenhum texto aprovado se perdeu; ficaram estas tarefas:
@@ -524,8 +541,9 @@ Resolvidos no próprio levantamento: a ida da conversa para o Windows (28/10), s
 - **PA-3, áudio (16/11):** o Matheus não gostou da `leitura-inteligente` como está (ela gera o áudio inteiro antes de tocar e fica lenta em arquivos grandes) e quer pensar com calma em como usar no método a leitura em voz alta e a captação de áudio (ditado). Material: a seção *Ouvir em vez de ler*; as medições de 04/11 (2 mil caracteres geram 153 s de áudio em 22 s; a reescrita de 50 mil caracteres levou 3 min 24 s); as 9 edições da leitura por seções, preparadas em 04/11 e não gravadas, guardadas no levantamento local; o `/voice` no computador e o ditado do app no celular; o Readwise Reader, a testar. Vira uma etapa própria.
 - **PA-4, central de tarefas e eventos (14/11):** hoje as tarefas e os compromissos ficam espalhados entre o Google Calendar (o mais usado), o Kanban e o calendário do Notion e o Kanban do GitHub, nos projetos de código. O Matheus quer um só lugar para os projetos pessoais, a vida pessoal e a faculdade. O plano centraliza só o estudo (Google Agenda e Tasks, incremento 7). Pede tempo para pensar.
 - **PA-5, reorganizar o Notion (14/11):** o Notion ficou de lado depois que o Kanban do GitHub e o Samsung Notes passaram a ser usados. O Matheus quer estudar como unir o que tem nele, para controlar o conteúdo das aulas e os trabalhos ao longo dos anos. Parte já está no plano (incremento 6: Área do Conhecimento, base única de Disciplinas, páginas antigas transformadas aos poucos; incremento 8: Samsung Notes); o novo é repensar o papel do Notion como um todo. Toca a PA-4, porque o Kanban do Notion aparece nas duas. Dúvida de 16/11: o repositório `caderno-de-estudos` como fonte do conhecimento, com o Notion como vitrine sincronizada, vale o trabalho da sincronização (uma segunda cópia para manter)? As saídas incluem manter o Notion como vitrine, usá-lo só para a faculdade e as tarefas, ou trocá-lo por um leitor de Markdown que abra o próprio repositório. O caderno usa Markdown e planilha CSV simples, para servir a qualquer saída.
-- **PA-6, filtro de autorizações (16/11):** o Matheus quer uma política restritiva para as autorizações pontuais ("pode fazer por mim"), para não abusar da ajuda e se forçar a pensar. Desde a versão inicial do núcleo (item 1.2), o Claude analisa o contexto antes de aceitar uma autorização. As autorizações de 16/11 (commits e passo 2 da consolidação) foram só para acelerar a montagem do método. Liga-se à parte conceitual × parte mecânica, ao modo urgente com dívida e ao sinal de desinteresse.
+- **PA-6, filtro de autorizações:** decidido em 16/11. O Claude se adapta e nunca bloqueia: o padrão é o Matheus pôr a mão em tudo o que não domina, inclusive na parte mecânica e na estética; o atalho só existe com o sinal dele e define um perfil de resposta, com a dívida no nível do assunto (*Modos de interação*); atalhos repetidos entram no sinal de desinteresse. As autorizações de 16/11 (commits e passo 2 da consolidação) foram só para acelerar a montagem do método; na *Implementação acelerada*, vale o modo revisor.
 - **PA-7, terminal ou VS Code (16/11):** o Matheus cogita usar o Claude Code pelo terminal, em vez do VS Code, e quer saber se compensa. As configurações do VS Code decididas em 27/10 esperam essa resposta.
+- **PA-8, textos fixos (16/11):** revisar com calma o formato e o texto das linhas de estado, legendas e avisos das ferramentas do método (a lista está na seção *Textos fixos* da [árvore de cenários](cenarios-de-interacao.md)). Não é urgente; o estilo definitivo (#7) é o lugar natural para fixá-los.
 
 O que depende só de teste está em *Verificações da execução*.
 
@@ -559,7 +577,7 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 03/11 | Edições do plano aprovadas uma a uma; sessão livre, sem aviso de tempo nem de cansaço; sinal de desinteresse diante de respostas prontas repetidas; fluxo em plugin no `ai-tutor`; regra no núcleo; Remote Control para celular, tablet e navegador |
 | 04/11 | Critério para plugins e conectores de terceiros, com instalação decidida candidato por candidato; áudio como forma de acesso ao material; `leitura-inteligente` por seções (suspensa em 16/11, PA-3); Readwise Reader a testar para texto corrido; `/voice` e ditado do app, sem o Wispr Flow; plugin `tutor` vinculado à conta (a conferir) |
 | 14/11 | Plano único neste repositório, marcado "em revisão"; núcleo provisório; estilo e ganchos provisórios no plugin; sessões locais com nome, uma por issue, com GitHub Project, e um teste do Projeto do Claude; separar o SGMF antes; trabalhar a partir deste repositório depois do passo 3 da consolidação; áudio como etapa própria |
-| 16/11 | Textos e comandos de rotina com o Matheus, com autorizações pontuais possíveis (a filtrar, PA-6); o bloqueio ignora o corpo de heredoc; `cp`, `mv`, `patch` e `git apply` pedem aprovação; pedir aprovação antes de contornar um gancho; o pedido de aprovação continua igual no modo automático; skill `dissecar-comando`; revisão de plano no repositório com cópia de trabalho, gravada de uma vez no fim e conferida pelo `git diff`; implementação acelerada, sem degraus provisórios; modo revisor (o Claude produz, o Matheus revisa) até o método estar implementado; sessão principal e tarefas com issue e sessão própria (no máximo 2 ou 3 abertas); brechas em issues com a etiqueta "brecha"; adaptação das issues afetadas por mudanças; caderno de estudos mínimo no lugar da caixa de entrada; celular e outros ambientes esperam; teste do plugin pela conta espera; uso do dia a dia no lugar da semana de teste |
+| 16/11 | Textos e comandos de rotina com o Matheus, com autorizações pontuais possíveis (a filtrar, PA-6); o bloqueio ignora o corpo de heredoc; `cp`, `mv`, `patch` e `git apply` pedem aprovação; pedir aprovação antes de contornar um gancho; o pedido de aprovação continua igual no modo automático; skill `dissecar-comando`; revisão de plano no repositório com cópia de trabalho, gravada de uma vez no fim e conferida pelo `git diff`; implementação acelerada, sem degraus provisórios; modo revisor (o Claude produz, o Matheus revisa) até o método estar implementado; sessão principal e tarefas com issue e sessão própria (no máximo 2 ou 3 abertas); brechas em issues com a etiqueta "brecha"; adaptação das issues afetadas por mudanças; caderno de estudos mínimo no lugar da caixa de entrada; celular e outros ambientes esperam; teste do plugin pela conta espera; uso do dia a dia no lugar da semana de teste; abertura da cópia de trabalho pelo terminal integrado; filtro de autorizações (PA-6): adaptar, nunca bloquear; perfil de resposta, com três sinais (palavra-chave, perfil que dura, comando por pedido); dívida em três níveis; *nunca só aceitar*; skill `escrever-texto` com escada de ajuda; dúvida pontual sem skill própria; skill `desafio`, oferecida pelo `fechar`; registro de tempo no `fechar`; explicação em todo comando; ChatGPT e Gemini fora das prioridades; dispositivos para depois |
 
 ## Rastreabilidade dos comentários do Matheus
 
@@ -574,6 +592,7 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 | 04/11 | Plugins e conectores que complementem o fluxo, decidindo depois o que baixar; leitura em áudio dentro do método, porque a skill fica lenta em arquivos grandes; conectores que contribuam com o aprendizado | *Plugins e conectores em avaliação*; *Ouvir em vez de ler*; *Medidas* |
 | 14/11 e 16/11 | Reunir tudo num plano único e dividi-lo em etapas, cada uma numa sessão com nome; trabalhar a partir deste repositório; separar o SGMF; repensar o áudio; central de tarefas e eventos; reorganizar o Notion; registrar os contornos do gancho; filtro de autorizações | *Pendências reunidas*; *Pontos em aberto*; *Decisões já tomadas*; issue #2 |
 | 16/11, rodada 1 | Como o modo de planejamento entra na revisão de um plano no repositório; quando dividir em tarefas; sessão principal e subsessões registradas em issues; brechas registradas por cada sessão e visíveis às outras; caixa de entrada × caderno (retrabalho); celular depois; terminal ou VS Code; implementar de verdade, sem provisórios; o Matheus como revisor; adaptar as issues quando algo mudar; GitHub ou Notion como centro do conhecimento | *Implementação acelerada*; *Etapa prévia*; Parte A; *Quem escreve o quê*; PA-5; PA-7 |
+| 16/11, rodada 2 | Bloquear ou se adaptar aos pedidos de resposta pronta; perfil de resposta pela pressa e pelo interesse; formas de sinalizar; níveis de dívida; árvore de cenários sem skills sobrepostas; textos com graus de ajuda, tamanhos e formatos; código com metodologia própria; comandos montados pelo Matheus e sempre explicados; quadro dos comandos incompleto; outras IAs só quando ajudarem mais; dispositivos depois; textos fixos | *Modos de interação*; *Trabalhar*; *Arquitetura*; itens 1.2 e 1.3; PA-6; PA-8; [árvore de cenários](cenarios-de-interacao.md) |
 
 ## Histórico das versões
 
@@ -585,7 +604,8 @@ O que só se resolve testando, com o caminho alternativo já combinado:
 - **Versão 13 (02/11):** esforço do dia e sequência ajustada.
 - **Versão 14 (03/11):** Etapa prévia; sessão livre; plugins, conectores e áudio (04/11).
 - **Versão 15 (16/11):** plano no repositório; pendências reunidas; PA-3 a PA-6.
-- **Versão 16 (16/11):** esta versão.
+- **Versão 16 (16/11):** implementação acelerada; cópia de trabalho; caderno no lugar da caixa de entrada.
+- **Versão 17 (16/11):** esta versão.
 
 ## A parte do SGMF
 
