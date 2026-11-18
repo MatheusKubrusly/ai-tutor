@@ -10,8 +10,8 @@ import { join, resolve, sep } from 'node:path';
 
 const pastaDeConfiguracao = process.env.CLAUDE_CONFIG_DIR || join(homedir(), '.claude');
 const pastaDosPlanos = join(pastaDeConfiguracao, 'plans') + sep;
-// O plano do método e as regras, no repositório ai-tutor
-const ARQUIVOS_DO_METODO = /[\\/]ai-tutor[\\/](docs[\\/]plano-do-metodo\.md$|protocolo[\\/])/;
+// O plano do método, a árvore de cenários e as regras, no repositório ai-tutor
+const ARQUIVOS_DO_METODO = /[\\/]ai-tutor[\\/](docs[\\/](plano-do-metodo|cenarios-de-interacao)\.md$|protocolo[\\/])/;
 
 try {
   const dados = JSON.parse(readFileSync(0, 'utf8'));
