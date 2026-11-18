@@ -86,6 +86,9 @@ Cada perfil tem um comportamento padrão em cada skill ou ferramenta. Assim o am
 | Código (desenvolver) | As cinco situações do modo | As mesmas, com pistas mais diretas | O Claude escreve; *Nunca só aceitar* com revisão dirigida; dívida | O Claude escreve; revisão dirigida |
 | Sessão de estudo (`roteiro`, `pista`, `fechar`) | Roteiro completo, pré-teste, escada e fechamento completo | Roteiro curto | A definir | A definir |
 | Revisão (`revisar`, `revisao`) | As seis fases da revisão de erros; a fila do dia | A definir | A definir | A definir |
+| Detecção (brecha, incoerência, erro; 17/11) | Pistas pela escada até o Matheus achar o problema; ele escreve a issue ou o comentário com a `escrever-texto`, com ajuda | Pistas mais diretas (onde olhar), depois o problema em poucas linhas; texto com poucas rodadas | O Claude aponta o problema; texto gerado, com revisão dirigida; dívida | O Claude aponta o problema de forma curta; texto gerado, com revisão dirigida |
+
+**Detecção fora das colunas:** com risco de perda (um comando que apagaria arquivos, uma senha prestes a ir para o GitHub, um push que sobrescreveria trabalho), o Claude para e avisa direto, em qualquer perfil, e o caso vira pistas depois. A linha segue o padrão problema-solução, decidido em 17/11 para o núcleo definitivo (#3).
 
 ### Níveis de dívida (decidido em 16/11)
 
