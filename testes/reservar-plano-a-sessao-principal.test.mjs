@@ -6,13 +6,22 @@ import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const SCRIPT = fileURLToPath(new URL('../plugins/tutor/scripts/reservar-plano-a-sessao-principal.mjs', import.meta.url));
+const SCRIPT = fileURLToPath(new URL('../plugins/tutor/scripts/provisorios/reservar-plano-a-sessao-principal.mjs', import.meta.url));
+const APROVACAO = fileURLToPath(new URL('../plugins/tutor/scripts/pedir-aprovacao-do-plano.mjs', import.meta.url));
 const base = mkdtempSync(join(tmpdir(), 'reservar-plano-'));
-const repositorio = join(base, 'ai-tutor');
+after(() => rmSync(base, { recursive: true, force: true }));
+
+// Um repositório do método se reconhece pelo núcleo provisório, e não pelo nome da pasta
+function repositorioFalso(...partes) {
+  const raiz = join(base, ...partes);
+  mkdirSync(join(raiz, 'docs'), { recursive: true });
+  mkdirSync(join(raiz, 'protocolo'), { recursive: true });
+  writeFileSync(join(raiz, 'protocolo', 'nucleo-provisorio.md'), '');
+  return raiz;
+}
+const repositorio = repositorioFalso('ai-tutor');
 const PLANO = join(repositorio, 'docs', 'plano-do-metodo.md');
 const CENARIOS = join(repositorio, 'docs', 'cenarios-de-interacao.md');
-mkdirSync(join(repositorio, 'docs'), { recursive: true });
-after(() => rmSync(base, { recursive: true, force: true }));
 
 function conversa(nome, ...registros) {
   const arquivo = join(base, `${nome}.jsonl`);
@@ -36,9 +45,9 @@ const CONVERSAS = {
   inexistente: join(base, 'nao-existe.jsonl'),
 };
 
-function rodar(transcript_path, tool_name, tool_input) {
+function rodar(transcript_path, tool_name, tool_input, script = SCRIPT) {
   const entrada = { session_id: 'teste', transcript_path, cwd: repositorio, hook_event_name: 'PreToolUse', tool_name, tool_input };
-  const resultado = spawnSync(process.execPath, [SCRIPT], {
+  const resultado = spawnSync(process.execPath, [script], {
     input: JSON.stringify(entrada),
     encoding: 'utf8',
     env: { ...process.env, CLAUDE_PROJECT_DIR: repositorio },
@@ -114,4 +123,77 @@ test('no terminal, os demais comandos passam', () => {
 test('no terminal, a sessão principal traz de volta a cópia aprovada do plano', () => {
   const command = `cp ${join(homedir(), '.claude', 'plans', 'copia.md')} docs/plano-do-metodo.md`;
   assert.equal(decisao(CONVERSAS.principal, 'Bash', { command }), 'passa');
+});
+
+test('no terminal, padrões e chaves não escapam', () => {
+  const barrados = [
+    'rm docs/*.md',
+    'git checkout -- docs/*.md',
+    'mv docs/plano-do-metodo.md{,.bak}',
+    'rm docs/plano-do-metodo.m?',
+    'rm docs/[cp]*.md',
+    'rm -r d*',
+    `cp ${join(base, 'rascunho')}/*.md docs/`,
+  ];
+  for (const command of barrados) {
+    assert.equal(decisao(CONVERSAS.area, 'Bash', { command }), 'deny', command);
+  }
+  const permitidos = ['echo "docs/*.md"', 'ls docs/*.md', 'rm docs/*.tmp', "rm 'docs/*.md'"];
+  for (const command of permitidos) {
+    assert.equal(decisao(CONVERSAS.area, 'Bash', { command }), 'passa', command);
+  }
+});
+
+test('no terminal, outros programas que alteram arquivos também são barrados', () => {
+  const barrados = [
+    'cp -t docs rascunho.md plano-do-metodo.md',
+    'cp --target-directory=docs plano-do-metodo.md',
+    'rsync -a rascunho.md docs/plano-do-metodo.md',
+    `rsync -a --delete ${join(base, 'rascunho')}/ docs/`,
+    'ln -sf rascunho.md docs/cenarios-de-interacao.md',
+    'install -m 644 rascunho.md docs/plano-do-metodo.md',
+    'truncate -s 0 docs/plano-do-metodo.md',
+    'dd if=/dev/zero of=docs/plano-do-metodo.md count=1',
+    'find docs -name "*.md" -delete',
+    'find . -name plano-do-metodo.md -exec rm {} +',
+    "bash -c 'rm docs/plano-do-metodo.md'",
+    'sh -c "git restore docs"',
+    'zsh -lc "cd docs && truncate -s 0 cenarios-de-interacao.md"',
+    'eval rm docs/cenarios-de-interacao.md',
+  ];
+  for (const command of barrados) {
+    assert.equal(decisao(CONVERSAS.area, 'Bash', { command }), 'deny', command);
+  }
+  const permitidos = [
+    `cp -t ${join(base, 'copias')} docs/plano-do-metodo.md`,
+    `rsync -a docs/ ${join(base, 'copias')}/`,
+    'find docs -name "*.md"',
+    `find ${join(base, 'rascunho')} -delete`,
+    "bash -c 'git status'",
+    'bash script.sh',
+  ];
+  for (const command of permitidos) {
+    assert.equal(decisao(CONVERSAS.area, 'Bash', { command }), 'passa', command);
+  }
+});
+
+test('o repositório é reconhecido pelo conteúdo, e não pelo nome da pasta', () => {
+  const clone = repositorioFalso('clone-com-outro-nome');
+  assert.equal(decisao(CONVERSAS.area, 'Edit', { file_path: join(clone, 'docs', 'plano-do-metodo.md') }), 'deny');
+  const semNucleo = join(base, 'sem-nucleo', 'ai-tutor');
+  mkdirSync(join(semNucleo, 'docs'), { recursive: true });
+  assert.equal(decisao(CONVERSAS.area, 'Edit', { file_path: join(semNucleo, 'docs', 'plano-do-metodo.md') }), 'passa');
+});
+
+test('juntos, os dois ganchos pedem aprovação à sessão principal e negam às outras sessões', () => {
+  // Quando um gancho nega e outro pede aprovação, a negação vence
+  const conjunta = (conversa, file_path) => {
+    const decisoes = [SCRIPT, APROVACAO].map((script) => rodar(conversa, 'Edit', { file_path }, script)?.permissionDecision);
+    if (decisoes.includes('deny')) return 'deny';
+    return decisoes.includes('ask') ? 'ask' : 'passa';
+  };
+  for (const arquivo of [PLANO, CENARIOS]) {
+    assert.equal(conjunta(CONVERSAS.principal, arquivo), 'ask', arquivo);
+    assert.equal(conjunta(CONVERSAS.area, arquivo), 'deny', arquivo);
+  }
 });

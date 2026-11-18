@@ -24,7 +24,16 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/reservar-plano-a-sessao-principal.mjs"
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/provisorios/reservar-plano-a-sessao-principal.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/provisorios/rede-do-plano.mjs"
           }
         ]
       }
@@ -38,6 +47,15 @@
             "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/registrar-comandos.mjs"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/provisorios/rede-do-plano.mjs"
+          }
+        ]
       }
     ],
     "PostToolUseFailure": [
@@ -47,6 +65,15 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/registrar-comandos.mjs"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/scripts/provisorios/rede-do-plano.mjs"
           }
         ]
       }
